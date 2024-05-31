@@ -7,11 +7,11 @@ import (
 	"strings"
 )
 
-var cliName string = "pokdex"
+var cliName string = "Pokdex"
 
 // Prints prompt for every loop
 func printPrompt() {
-    fmt.Println(cliName, "> ")
+    fmt.Print(cliName, "> ")
 }
 
 // Prints for unkown functions
