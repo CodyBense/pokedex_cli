@@ -1,15 +1,17 @@
 package main
 
 import (
-    "fmt"
-    "bufio"
-    "strings"
-    "os"
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
 )
 
 func main() {
     // Hardcoded commands
     commands := map[string]interface{} {
+        "map": pokemon_map,
+        "mapb": pokemon_mapb,
         "help": displayHelp,
         "clear": clearScreen,
     }

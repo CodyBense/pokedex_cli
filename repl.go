@@ -24,9 +24,11 @@ func displayHelp() {
     fmt.Printf(
         "Welcome to %v! These are the avilable commands: \n", cliName,
     )
-    fmt.Println("help  - Show available commands")
-    fmt.Println("clear - Clear the terminal screen")
-    fmt.Println("exit  - Exit your connection")
+    fmt.Println("map    -   Show 20 locations from the map")
+    fmt.Println("mapb   -   Show the previous 20 locations")
+    fmt.Println("help   -   Show available commands")
+    fmt.Println("clear  -   Clear the terminal screen")
+    fmt.Println("exit   -   Exit your connection")
 }
 
 // Clears the screen
