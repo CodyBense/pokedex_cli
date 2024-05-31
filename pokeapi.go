@@ -8,6 +8,9 @@ import (
 	"net/http"
 )
 
+// TODO: *UPDATE to new format, found in repl.go* map: get Config arg working, work on subsquent call feature; mapb: all of it
+
+// Struct for response
 type Config struct {
     Count int 
     Next string 
@@ -19,10 +22,12 @@ type Config struct {
 }
 
 // Prints 20 locations on the pokemon map, subsequent calls should print the next 20
-func pokemon_map(/* cfg *Config */) {
+func commandMap(cfg *Config) error{
+    // GET api request and check for errors
     res, err := http.Get("https://pokeapi.co/api/v2/location-area/")
     if err != nil {
         log.Fatal(err)
+        return err
     }
     body, err := io.ReadAll(res.Body)
     res.Body.Close()
@@ -31,30 +36,27 @@ func pokemon_map(/* cfg *Config */) {
     }
     if err != nil {
         log.Fatal(err)
+        return err
     }
-    /* dat := []byte(`{
-        "count" : 1054,
-        "next" : "https://pokeapi.co/api/v2/location-area/?offset=20&limit=20",
-        "previous" : null,
-        "results":
-        [{
-            "name" : "canalave-city-area",
-            "url" : "https://pokeapi.co/api/v2/location-area/1/"
-        }]
-    }`) */
+
+    // Slice GET request into Config struct
     dat := []byte(body)
     
-    cfg := Config{}
+    // cfg := Config{}
 
     errUm := json.Unmarshal(dat, &cfg)
     if errUm != nil {
         fmt.Println(errUm)
     }
+
+    // Prints location names
+    fmt.Println()
     for location := range len(cfg.Results){
         fmt.Println(cfg.Results[location].Name)
     }
+    return nil
 }
 
 // Prints the previous 20 locaitons
-func pokemon_mapb(cfg *Config) {
+func commandMapb(cfg *Config) {
 }
