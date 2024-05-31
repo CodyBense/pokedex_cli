@@ -6,12 +6,12 @@ import (
     "fmt"
 )
 
-func commandExit() error {
+func commandExit(cfg *Config) error {
     os.Exit(0)
     return nil
 }
 
-func commandHelp() error {
+func commandHelp(cfg *Config) error {
     fmt.Println()
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")
@@ -23,7 +23,7 @@ func commandHelp() error {
 	return nil
 }
 
-func commandClear() error {
+func commandClear(cfg *Config) error {
     cmd := exec.Command("clear")
     cmd.Stdout = os.Stdout
     cmd.Run()
