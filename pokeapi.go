@@ -13,13 +13,13 @@ import (
 
 // Struct for response
 type Config struct {
-    Count       int 
-    Next        string 
-    Previous    string 
+    Count       int `json:"count"`
+    Next        string `json:"next"`
+    Previous    string `json:"previous"`
     Results     []struct {
-        Name string 
-        Url  string 
-    } 
+        Name string `json:"name"`
+        Url  string `json:"url"`
+    } `json:"results"`
 }
 
 // Prints 20 locations on the pokemon map, subsequent calls should print the next 20
