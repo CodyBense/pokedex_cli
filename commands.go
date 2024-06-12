@@ -71,7 +71,7 @@ func commandExplore(cfg *config, args ...string) error {
     }
 
     name := args[0]
-    location, err := cfg.pokeapiClient.GetLocaiton(name)
+    location, err := cfg.pokeapiClient.GetLocation(name)
     if err != nil {
         return err
     }
