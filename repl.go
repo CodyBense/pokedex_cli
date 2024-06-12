@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/bootdotdev/go-api-gate/courses/projects/pokedexcli/internal/pokeapi"
+	"github.com/CodyBense/pokedexcli/internal/pokeapi"
 )
 
 type config struct {
