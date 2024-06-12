@@ -5,93 +5,85 @@ import (
 	"fmt"
 	"os"
 	"strings"
-    "github.com/CodyBense/pokedexcli/internal/pokeapi"
+
+	"github.com/bootdotdev/go-api-gate/courses/projects/pokedexcli/internal/pokeapi"
 )
 
-// Command struct
-type cliCommand struct {
-    name        string
-    description string
-    callBack    func(*config, ...string) error
-}
-
 type config struct {
-    pokeapiClient       pokeapi.Client
-    nextLocationsURL    *string
-    prevLocationsURL    *string
+	pokeapiClient    pokeapi.Client
+	nextLocationsURL *string
+	prevLocationsURL *string
 }
 
-// Repl loop: reads in input, finds command and runs it or prints unknown command if not existant
 func startRepl(cfg *config) {
-    reader := bufio.NewScanner(os.Stdin)
-    for {
-        fmt.Print("Pokedex > ")
-        reader.Scan()
+	reader := bufio.NewScanner(os.Stdin)
+	for {
+		fmt.Print("Pokedex > ")
+		reader.Scan()
 
-        words := cleanInput(reader.Text())
-        if len(words) == 0 {
-            continue
-        }
+		words := cleanInput(reader.Text())
+		if len(words) == 0 {
+			continue
+		}
 
-        commandName := words[0]
-        args := []string{}
-        if len(words) > 1 {
-            args = words[:1]
-        }
+		commandName := words[0]
+		args := []string{}
+		if len(words) > 1 {
+			args = words[1:]
+		}
 
-        command, exits := getCommands()[commandName]
-        if exits {
-            err := command.callBack(cfg, args...)
-            if err != nil {
-                fmt.Println(err)
-            }
-            continue
-        } else {
-            fmt.Println("Unkown Command")
-            continue
-        }
-    }
+		command, exists := getCommands()[commandName]
+		if exists {
+			err := command.callback(cfg, args...)
+			if err != nil {
+				fmt.Println(err)
+			}
+			continue
+		} else {
+			fmt.Println("Unknown command")
+			continue
+		}
+	}
 }
 
-// Helper function to cleanup input
 func cleanInput(text string) []string {
-    output := strings.ToLower(text)
-    words := strings.Fields(output)
-    return words
+	output := strings.ToLower(text)
+	words := strings.Fields(output)
+	return words
 }
 
-// Gets commands
+type cliCommand struct {
+	name        string
+	description string
+	callback    func(*config, ...string) error
+}
+
 func getCommands() map[string]cliCommand {
-    return map[string]cliCommand {
-        "help": {
-            name: "help",
-            description: "Displays a help message",
-            callBack: commandHelp,
-        },
-        "explore": {
-            name: "explore <location_name>",
-            description: "Lists the Pokemon in a location",
-            callBack: commandExplore,
-        },
-        "map": {
-            name: "map",
-            description: "Prints 20 locations, subsequent calls prints the next 20",
-            callBack: commandMapf,
-        },
-        "mapb": {
-            name: "mapb",
-            description: "Prints the previous 20 locations",
-            callBack: commandMapb,
-        },
-        "exit": {
-            name: "exit",
-            description: "Exit the pokedex",
-            callBack: commandExit,
-        },
-        "clear": {
-            name: "clear",
-            description: "Clears the screen",
-            callBack: commandClear,
-        },
-    }
+	return map[string]cliCommand{
+		"help": {
+			name:        "help",
+			description: "Displays a help message",
+			callback:    commandHelp,
+		},
+		"explore": {
+			name:        "explore <location_name>",
+			description: "Explore a location",
+			callback:    commandExplore,
+		},
+		"map": {
+			name:        "map",
+			description: "Get the next page of locations",
+			callback:    commandMapf,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "Get the previous page of locations",
+			callback:    commandMapb,
+		},
+		"exit": {
+			name:        "exit",
+			description: "Exit the Pokedex",
+			callback:    commandExit,
+		},
+	}
 }
