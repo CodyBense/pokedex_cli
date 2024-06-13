@@ -17,10 +17,13 @@ func commandInspect(cfg *config, args ...string) error {
     }
     for _, p := range cfg.caughtPokemon {
         if p.Name == name {
-            fmt.Printf("Name: %s\n", pokemon.Name)
-            fmt.Printf("Height: %d\n", pokemon.Height)
-            fmt.Printf("Weight: %d\n", pokemon.Weight)
-            fmt.Printf("Stats:\n\t-hp: %d\n", pokemon.Stats)
+            fmt.Println("Name:", pokemon.Name)
+            fmt.Println("Height:", pokemon.Height)
+            fmt.Println("Weight:", pokemon.Weight)
+            fmt.Println("Stats:")
+            for _, stat := range pokemon.Stats {
+                fmt.Printf(" -%s: %v\n", stat.Stat.Name, stat.BaseStat)
+            }
         }
         return nil
     }
