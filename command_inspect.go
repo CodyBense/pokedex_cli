@@ -3,7 +3,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"go/types"
 )
 
 func commandInspect(cfg *config, args ...string) error {
@@ -26,8 +25,8 @@ func commandInspect(cfg *config, args ...string) error {
                 fmt.Printf(" -%s: %v\n", stat.Stat.Name, stat.BaseStat)
             }
             fmt.Println("Types:")
-            for _, type := range pokemon.types {
-                fmt.Printf(" -%s\n", type.types.Type)
+            for _, typeInfo := range pokemon.Types {
+                fmt.Printf(" -%s\n", typeInfo.Type.Name)
             }
         }
         return nil
