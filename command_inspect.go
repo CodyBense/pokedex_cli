@@ -17,8 +17,11 @@ func commandInspect(cfg *config, args ...string) error {
     }
     for _, p := range cfg.caughtPokemon {
         if p.Name == name {
-            fmt.Println(pokemon)
+            fmt.Printf("Name: %s\n", pokemon.Name)
+            fmt.Printf("Height: %d\n", pokemon.Height)
+            fmt.Printf("Weight: %d\n", pokemon.Weight)
         }
+        return nil
     }
-    return nil
+    return errors.New("pokemon not caught")
 }
