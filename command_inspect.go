@@ -1,8 +1,9 @@
 package main
 
 import (
-    "errors"
-    "fmt"
+	"errors"
+	"fmt"
+	"go/types"
 )
 
 func commandInspect(cfg *config, args ...string) error {
@@ -23,6 +24,10 @@ func commandInspect(cfg *config, args ...string) error {
             fmt.Println("Stats:")
             for _, stat := range pokemon.Stats {
                 fmt.Printf(" -%s: %v\n", stat.Stat.Name, stat.BaseStat)
+            }
+            fmt.Println("Types:")
+            for _, type := range pokemon.types {
+                fmt.Printf(" -%s\n", type.types.Type)
             }
         }
         return nil
